@@ -1,5 +1,6 @@
 package com.mycompany.grupo_02;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +8,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 
 /**
  * JavaFX App
@@ -17,7 +23,35 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+       
+
+        HBox root = new HBox();
+        Scene scene = new Scene(root, 300, 300);
+
+        Button btn = new Button("load");
+        Button btn2 = new Button("Crear");
+ 
+        btn.setOnAction(e -> {
+            DirectoryChooser chooser = new DirectoryChooser();
+            chooser.setTitle("Selector de directorio");
+            File defaultDirectory = new File("C:\\Users\\gabri\\OneDrive\\Documentos\\Gabriel\\Universidad");
+            chooser.setInitialDirectory(defaultDirectory);
+
+            Pantalla_InicioController.directorio = chooser.showDialog(stage);
+        });
+
+        btn2.setOnAction(e -> {
+            try {
+                Scene scene2 = new Scene(loadFXML("Pantalla_Inicio"), 640, 480);
+                stage.setScene(scene2);
+                stage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+        });
+
+        root.getChildren().addAll(btn, btn2);
         stage.setScene(scene);
         stage.show();
     }
