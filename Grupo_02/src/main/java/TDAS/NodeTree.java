@@ -32,6 +32,11 @@ public class NodeTree<E> {
     public void setChildren(LinkedList<Tree<E>> children) {
         this.children = children;
     }
+
+    @Override
+    public String toString() {
+        return "nombre = " + content;
+    }
     
     
 }

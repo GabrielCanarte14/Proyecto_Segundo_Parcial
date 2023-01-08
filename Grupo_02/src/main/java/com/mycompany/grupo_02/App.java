@@ -42,8 +42,10 @@ public class App extends Application {
 
         btn2.setOnAction(e -> {
             try {
-                Scene scene2 = new Scene(loadFXML("Pantalla_Inicio"), 640, 480);
+                Scene scene2 = new Scene(loadFXML("Pantalla_Inicio"), 1400, 900);
                 stage.setScene(scene2);
+                stage.setResizable(false);
+                stage.centerOnScreen();
                 stage.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -68,5 +70,5 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
+    
 }
