@@ -1,6 +1,7 @@
 package TDAS;
 
 import java.io.File;
+import java.util.LinkedList;
 
 
 public class Tree<E> {
@@ -47,7 +48,7 @@ public class Tree<E> {
     
     public void recorrer(){
         if(this.isLeaf()){
-            System.out.println(this.root.getContent());
+            System.out.println(this.root.getContent());          
         } else {
             System.out.println(this.root.getContent());
             for(Tree<E> tmp: this.root.getChildren()){
