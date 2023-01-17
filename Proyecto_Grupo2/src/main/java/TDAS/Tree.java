@@ -1,9 +1,5 @@
 package TDAS;
 
-import java.io.File;
-import java.util.LinkedList;
-
-
 public class Tree<E> {
     private NodeTree<E> root;
 

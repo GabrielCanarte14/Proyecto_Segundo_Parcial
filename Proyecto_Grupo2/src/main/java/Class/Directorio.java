@@ -5,24 +5,31 @@ import java.io.File;
 import java.util.LinkedList;
 
 public class Directorio{
+    private String ruta;
     private String nombre;
     private int tamanio;
     private Boolean isDirectory = false;
     private LinkedList<Directorio> archivos;
     
     //Para construir los directorios 
-    public Directorio(String nombre) {
+    public Directorio(String nombre, String ruta) {
+        this.ruta = ruta;
         this.nombre = nombre;
         isDirectory = true;
         archivos = new LinkedList<>();
     }
     
     //para construir los archivos normales
-    public Directorio(String nombre, int tamanio) {
+    public Directorio(String nombre, int tamanio, String ruta) {
         this.nombre = nombre;
         this.tamanio = tamanio;
+        this.ruta = ruta;
     }
 
+    public String getRuta() {
+        return ruta;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -39,6 +46,10 @@ public class Directorio{
         return archivos;
     }
 
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -76,15 +87,15 @@ public class Directorio{
     }
 
     public void llenarArchivos() {
-        File directorio = new File(nombre);
-        if(isDirectory == true && directorio != null) {
+        File directorio = new File(ruta);
+        if(isDirectory == true) {
             File[] todos = directorio.listFiles();
             for(File f: todos){
                 if(!f.isDirectory()){
-                    Directorio tmp = new Directorio(f.getPath(), (int)f.length());
+                    Directorio tmp = new Directorio(f.getName(), (int)f.length(), f.getPath());
                     this.archivos.add(tmp);
                 } else {
-                    Directorio tmp = new Directorio(f.getPath());
+                    Directorio tmp = new Directorio(f.getName(), f.getPath());
                     tmp.setTamanio(calcularPeso(f));
                     tmp.llenarArchivos();
                     this.archivos.add(tmp);

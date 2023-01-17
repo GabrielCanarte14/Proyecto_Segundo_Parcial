@@ -8,15 +8,10 @@ import Class.Directorio;
 import TDAS.NodeTree;
 import TDAS.Tree;
 import java.io.File;
-
 import java.net.URL;
-
-import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.Random;
-
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.stage.DirectoryChooser;
@@ -83,11 +77,14 @@ public class PrincipalController implements Initializable {
             mostrarAlerta(Alert.AlertType.ERROR, "No se ha seleccionado un directorio");
         } else {
             tfDirectorio.setText(directorio.getPath());
-            Directorio principal = new Directorio(directorio.getPath());
+            Directorio principal = new Directorio(directorio.getName(), directorio.getPath());
             principal.llenarArchivos();
             principal.setTamanio(principal.calcularPeso(directorio));
             arbolPrincipal = new Tree<>(principal);
-            construirArbol(arbolPrincipal, directorio);
+            if(directorio != null) {
+               construirArbol(arbolPrincipal, directorio); 
+            }
+            
         }
     }
 
@@ -116,28 +113,35 @@ public class PrincipalController implements Initializable {
     //Metodo para crear el treemap
     @FXML
     private void crearTree(ActionEvent event) {
-        VBox container = new VBox();
-        Pane SizeTotal = new Pane();
+        if (arbolPrincipal != null) {
+            limpiarLbls();
+            paneTree.getChildren().clear();
+            VBox container = new VBox();
+            Pane SizeTotal = new Pane();
 
-        HBox graphics = new HBox();
-        graphics.setMaxWidth(1188);
-        graphics.setMaxHeight(731);
-        
-        //Es el rectangulo mostrado como cabecera con el peso total del directorio
-        Rectangle graphicSizeTotal = new Rectangle();
-        graphicSizeTotal.setWidth(1188);
-        graphicSizeTotal.setHeight(25);
-        graphicSizeTotal.setFill(Color.CORAL);
-        graphicSizeTotal.setStroke(Color.WHITE);
-        
-        Label extensionSize = new Label();
-        setLabelSize(extensionSize,  arbolPrincipal.getRoot().getContent().calcularPeso(directorio));
-        SizeTotal.getChildren().addAll(graphicSizeTotal, extensionSize);
-        container.getChildren().addAll(SizeTotal, graphics);
-        crearRecuadros(arbolPrincipal.getRoot().getContent(), graphics, 1188.0, 731.0, "h");
-        paneTree.getChildren().addAll(container);
+            HBox graphics = new HBox();
+            graphics.setMaxWidth(1188);
+            graphics.setMaxHeight(731);
+
+            //Es el rectangulo mostrado como cabecera con el peso total del directorio
+            Rectangle graphicSizeTotal = new Rectangle();
+            graphicSizeTotal.setWidth(1188);
+            graphicSizeTotal.setHeight(25);
+            graphicSizeTotal.setFill(Color.CORAL);
+            graphicSizeTotal.setStroke(Color.WHITE);
+
+            Label extensionSize = new Label();
+            System.out.println(arbolPrincipal);
+            setLabelSize(extensionSize, arbolPrincipal.getRoot().getContent().calcularPeso(directorio));
+            SizeTotal.getChildren().addAll(graphicSizeTotal, extensionSize);
+            container.getChildren().addAll(SizeTotal, graphics);
+            crearRecuadros(arbolPrincipal.getRoot().getContent(), graphics, 1188.0, 731.0, "h");
+            paneTree.getChildren().addAll(container);
+        } else {
+            mostrarAlerta(Alert.AlertType.ERROR, "No ha seleccionado un directorio");
+        }
     }
-    
+
     public void crearRecuadros(Directorio directory, Pane pane, double width, double height, String type){
         LinkedList<Directorio> archivos = directory.getArchivos();
         double size = directory.getTamanio();
@@ -204,13 +208,13 @@ public class PrincipalController implements Initializable {
     //Para que se muestre en un formato adecuado de tamanio
     public void setLabelSize(Label lb, long amount) {
         lb.setStyle("-fx-font-weight: bold; -fx-font-size: 15");
-        if (amount < 1000) {
-            lb.setText("(" + amount + " KB" + ")");
-        } else if (amount >= 1000 && amount < (1024 * 1024 * 1024)) {
-            long tmp = amount / (1024 * 1024);
-            lb.setText("(" + tmp + ")" + " MB" + ")");
+        if (amount < 1000*1000) {
+            lb.setText("(" + amount/1000 + " KB" + ")");
+        } else if (amount >= 1000*1000 && amount < (1000*1000*1000)) {
+            double tmp = amount / (1000*1000);
+            lb.setText("(" + tmp  + " MB" + ")");
         } else {
-            long tmp = amount / (1024 * 1024 * 1024);
+            double tmp = amount / (1000 * 1000 * 1000);
             lb.setText("(" + tmp + " GB" + ")");
         }
     }
@@ -221,11 +225,11 @@ public class PrincipalController implements Initializable {
             for (File f : fileList) {  
                 Tree<Directorio> tmp = new Tree<>();
                 if (f.isFile() && !f.getPath().contains("ini")) {
-                    Directorio direc = new Directorio(f.getPath(), (int)f.length());
+                    Directorio direc = new Directorio(f.getName(), (int)f.length(), f.getPath());
                     tmp.setRoot(new NodeTree<>(direc));
                     arbol.getRoot().getChildren().add(tmp);
                 } else if (f.isDirectory()) {
-                    Directorio direc = new Directorio(f.getPath());
+                    Directorio direc = new Directorio(f.getName(), f.getPath());
                     direc.llenarArchivos();
                     tmp.setRoot(new NodeTree<>(direc));
                     arbol.getRoot().getChildren().add(tmp);
@@ -237,7 +241,14 @@ public class PrincipalController implements Initializable {
 
     private void llenarDatos(Directorio f) {
         lblNombre.setText(f.getNombre());
-        lblPeso.setText((Integer.toString(f.getTamanio())));
+        setLabelSize(lblPeso, f.getTamanio());
+        
+    }
+
+    private void limpiarLbls() {
+        lblNombre.setStyle("-fx-font-weight: bold; -fx-font-size: 15");
+        lblNombre.setText("");
+        lblPeso.setText("");
     }
     
 

@@ -8,72 +8,88 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.proyecto_grupo2.PrincipalController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1400.0" style="-fx-background-color: F8F4EA;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.proyecto_grupo2.PrincipalController">
    <children>
       <HBox prefHeight="900.0" prefWidth="1400.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="900.0" prefWidth="1189.0" style="-fx-border-color: black;">
+            <VBox alignment="CENTER" prefHeight="900.0" prefWidth="1189.0" style="-fx-background-color: F8F4EA;">
                <children>
                   <HBox prefHeight="29.0" prefWidth="1087.0">
                      <children>
-                        <Button fx:id="btnSeleccion" mnemonicParsing="false" onAction="#seleccionarDirectorio" prefHeight="29.0" prefWidth="171.0" text="Seleccionar Directorio">
+                        <Button fx:id="btnSeleccion" mnemonicParsing="false" onAction="#seleccionarDirectorio" prefHeight="29.0" prefWidth="171.0" style="-fx-background-color: E1D7C6; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Seleccionar Directorio">
                            <HBox.margin>
                               <Insets right="5.0" />
-                           </HBox.margin></Button>
-                        <TextField fx:id="tfDirectorio" editable="false" prefHeight="29.0" prefWidth="857.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Button>
+                        <TextField fx:id="tfDirectorio" editable="false" prefHeight="29.0" prefWidth="857.0" style="-fx-background-radius: 20; -fx-font-weight: bold;" />
 
 
-                        <Button fx:id="btnCrear" mnemonicParsing="false" onAction="#crearTree" prefHeight="29.0" prefWidth="156.0" text="Crear">
+                        <Button fx:id="btnCrear" mnemonicParsing="false" onAction="#crearTree" prefHeight="29.0" prefWidth="156.0" style="-fx-background-color: E1D7C6; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Crear">
                            <HBox.margin>
                               <Insets left="5.0" />
-                           </HBox.margin></Button>
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Button>
                      </children>
                   </HBox>
-                  <AnchorPane fx:id="paneTree" prefHeight="860.0" prefWidth="1186.0" />
+                  <AnchorPane fx:id="paneTree" prefHeight="750.0" prefWidth="1178.0">
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin></AnchorPane>
                </children>
                <HBox.margin>
                   <Insets />
                </HBox.margin>
                <padding>
-                  <Insets top="10.0" />
+                  <Insets left="5.0" right="5.0" top="10.0" />
                </padding>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="900.0" prefWidth="213.0" style="-fx-border-color: black;">
+            <VBox alignment="CENTER" prefHeight="900.0" prefWidth="213.0">
                <children>
-                  <Label text="Especificaciones">
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: ECE8DD; -fx-background-radius: 10;">
+                     <children>
+                        <Label layoutX="18.0" layoutY="24.0" text="Especificaciones">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="53.0" layoutY="61.0" text="Nombre:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblNombre" layoutX="18.0" layoutY="92.0" prefHeight="17.0" prefWidth="166.0" />
+                        <Label layoutX="65.0" layoutY="116.0" text="Peso:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblPeso" layoutX="18.0" layoutY="143.0" prefHeight="17.0" prefWidth="166.0" />
+                     </children>
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="20.0" left="10.0" right="10.0" />
                      </VBox.margin>
-                  </Label>
-                  <Label text="Nombre:" />
-                  <Label fx:id="lblNombre" text="Label">
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: ECE8DD; -fx-background-radius: 10;">
+                     <children>
+                        <Label layoutX="54.0" layoutY="26.0" text="ACCIONES">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btbCrear" layoutX="46.0" layoutY="66.0" mnemonicParsing="false" onAction="#crear" style="-fx-background-color: E1D7C6; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Crear archivo" />
+                        <Button fx:id="btnEliminar" layoutX="39.0" layoutY="100.0" mnemonicParsing="false" onAction="#eliminar" style="-fx-background-color: E1D7C6; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Eliminar archivo" />
+                        <Button fx:id="btnLista" layoutX="51.0" layoutY="135.0" mnemonicParsing="false" onAction="#listar" style="-fx-background-color: E1D7C6; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: black;" text="Ver en lista" />
+                     </children>
                      <VBox.margin>
-                        <Insets top="5.0" />
+                        <Insets left="10.0" right="10.0" />
                      </VBox.margin>
-                  </Label>
-                  <Label text="Peso:">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="lblPeso" text="Label">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="Acciones">
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="100.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Button fx:id="btbCrear" mnemonicParsing="false" onAction="#crear" text="Crear archivo" />
-                  <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" text="Eliminar archivo">
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="btnLista" mnemonicParsing="false" onAction="#listar" text="Ver en lista" />
+                  </Pane>
                </children>
                <opaqueInsets>
                   <Insets />
