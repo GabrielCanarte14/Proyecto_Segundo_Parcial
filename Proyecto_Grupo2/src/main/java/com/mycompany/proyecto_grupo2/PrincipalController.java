@@ -8,18 +8,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Class.Directorio;
+import TDAS.ArrayList;
 import TDAS.NodeTree;
 import TDAS.Tree;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -31,6 +32,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -40,7 +43,7 @@ import javafx.stage.DirectoryChooser;
 public class PrincipalController implements Initializable {
     
     private File directorio;
-    private Tree<Directorio> arbolPrincipal;
+    public static Tree<Directorio> arbolPrincipal;
     
     
     @FXML
@@ -59,6 +62,8 @@ public class PrincipalController implements Initializable {
     private Button btnLista;
     @FXML
     private Button btnCrear;
+    @FXML
+    private Button btnCrearArchivo;
     @FXML
     private Pane paneTree;
 
@@ -88,6 +93,7 @@ public class PrincipalController implements Initializable {
             arbolPrincipal = new Tree<>(principal);
             if(directorio != null) {
                construirArbol(arbolPrincipal, directorio); 
+               
             }
             
         }
@@ -147,13 +153,14 @@ public class PrincipalController implements Initializable {
             container.getChildren().addAll(SizeTotal, graphics);
             crearRecuadros(arbolPrincipal.getRoot().getContent(), graphics, 1188.0, 731.0, "h");
             paneTree.getChildren().addAll(container);
+            activarBotones();
         } else {
             mostrarAlerta(Alert.AlertType.ERROR, "No ha seleccionado un directorio");
         }
     }
 
     public void crearRecuadros(Directorio directory, Pane pane, double width, double height, String type){
-        LinkedList<Directorio> archivos = directory.getArchivos();
+        ArrayList<Directorio> archivos = directory.getArchivos();
         double size = directory.getTamanio();
         archivos.forEach((f) -> {
             if (!f.isDirectory() && type.equals("h")) {
@@ -264,17 +271,23 @@ public class PrincipalController implements Initializable {
     private void abrirInterfazFiltro() throws Exception {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("filtro.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            
             FiltroController cc = new FiltroController();
             
-            fxmlLoader.setController(cc);
-            HBox root = (HBox) fxmlLoader.load();
-            cc.cargarTabla(arbolPrincipal);
-            
-            
-            App.changeRoot(root);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void activarBotones() {
+        btnCrearArchivo.setDisable(false);
+        btnEliminar.setDisable(false);
+        btnLista.setDisable(false);
     }
     
 

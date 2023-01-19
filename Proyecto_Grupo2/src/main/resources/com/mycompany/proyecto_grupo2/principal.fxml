@@ -82,9 +82,9 @@
                               <Font name="System Bold" size="17.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btbCrear" layoutX="46.0" layoutY="66.0" mnemonicParsing="false" onAction="#crear" style="-fx-background-color: E1D7C6; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Crear archivo" />
-                        <Button fx:id="btnEliminar" layoutX="39.0" layoutY="100.0" mnemonicParsing="false" onAction="#eliminar" style="-fx-background-color: E1D7C6; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Eliminar archivo" />
-                        <Button fx:id="btnLista" layoutX="51.0" layoutY="135.0" mnemonicParsing="false" onAction="#listar" style="-fx-background-color: E1D7C6; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: black;" text="Ver en lista" />
+                        <Button fx:id="btnCrearArchivo" disable="true" layoutX="46.0" layoutY="66.0" mnemonicParsing="false" onAction="#crear" style="-fx-background-color: E1D7C6; -fx-border-color: black; -fx-border-radius: 10; -fx-background-radius: 10;" text="Crear archivo" />
+                        <Button fx:id="btnEliminar" disable="true" layoutX="39.0" layoutY="100.0" mnemonicParsing="false" onAction="#eliminar" style="-fx-background-color: E1D7C6; -fx-background-radius: 10; -fx-border-color: black; -fx-border-radius: 10;" text="Eliminar archivo" />
+                        <Button fx:id="btnLista" disable="true" layoutX="51.0" layoutY="135.0" mnemonicParsing="false" onAction="#listar" style="-fx-background-color: E1D7C6; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: black;" text="Ver en lista" />
                      </children>
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" />

@@ -2,21 +2,22 @@
 package Class;
 
 import java.io.File;
-import java.util.LinkedList;
+import TDAS.ArrayList;
+import java.util.Comparator;
 
-public class Directorio{
+public class Directorio implements Comparator<Directorio>{
     private String ruta;
     private String nombre;
     private int tamanio;
     private Boolean isDirectory = false;
-    private LinkedList<Directorio> archivos;
+    private ArrayList<Directorio> archivos;
     
     //Para construir los directorios 
     public Directorio(String nombre, String ruta) {
         this.ruta = ruta;
         this.nombre = nombre;
         isDirectory = true;
-        archivos = new LinkedList<>();
+        archivos = new ArrayList<>();
     }
     
     //para construir los archivos normales
@@ -42,7 +43,7 @@ public class Directorio{
         return isDirectory;
     }
 
-    public LinkedList<Directorio> getArchivos() {
+    public ArrayList<Directorio> getArchivos() {
         return archivos;
     }
 
@@ -62,7 +63,7 @@ public class Directorio{
         this.isDirectory = isDirectory;
     }
 
-    public void setArchivos(LinkedList<Directorio> archivos) {
+    public void setArchivos(ArrayList<Directorio> archivos) {
         this.archivos = archivos;
     }
 
@@ -93,12 +94,12 @@ public class Directorio{
             for(File f: todos){
                 if(!f.isDirectory()){
                     Directorio tmp = new Directorio(f.getName(), (int)f.length(), f.getPath());
-                    this.archivos.add(tmp);
+                    this.archivos.addFirst(tmp);
                 } else {
                     Directorio tmp = new Directorio(f.getName(), f.getPath());
                     tmp.setTamanio(calcularPeso(f));
                     tmp.llenarArchivos();
-                    this.archivos.add(tmp);
+                    this.archivos.addFirst(tmp);
                 }               
             }
         }  
@@ -106,6 +107,11 @@ public class Directorio{
     
     public Boolean isDirectory(){
         return isDirectory;
+    }
+
+    @Override
+    public int compare(Directorio o1, Directorio o2) {
+        return o1.getNombre().compareTo(o2.getNombre());
     }
     
 }

@@ -1,6 +1,6 @@
 package TDAS;
 
-import java.util.ArrayList;
+import TDAS.ArrayList;
 
 public class Tree<E> {
     private NodeTree<E> root;
@@ -49,14 +49,14 @@ public class Tree<E> {
         
         if(this.isLeaf()){
            System.out.println(this.root.getContent());
-           result.add(this.root.getContent());         
+           result.addLast(this.root.getContent());         
         } else {
             System.out.println(this.root.getContent());
-            result.add(this.root.getContent());
+            result.addLast(this.root.getContent());
             for(Tree<E> tmp: this.root.getChildren()){
                 ArrayList<E> secundario = tmp.recorrer();
                 for(E e: secundario){
-                    result.add(e);
+                    result.addLast(e);
                 }
             }
         }
