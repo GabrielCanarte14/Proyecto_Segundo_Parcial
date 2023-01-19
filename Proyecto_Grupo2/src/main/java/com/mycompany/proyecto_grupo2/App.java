@@ -32,6 +32,10 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
+    
+    static void changeRoot(Parent rootNode) {
+        scene.setRoot(rootNode);
+    }
 
     public static void main(String[] args) {
         launch();

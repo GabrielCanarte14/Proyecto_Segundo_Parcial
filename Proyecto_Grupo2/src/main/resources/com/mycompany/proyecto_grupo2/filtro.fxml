@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1400.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <padding>
+      <Insets bottom="50.0" left="30.0" right="25.0" top="50.0" />
+   </padding>
+   <children>
+      <TableView fx:id="tblFiltros" prefHeight="300.0" prefWidth="910.0">
+         <columns>
+            <TableColumn fx:id="colNombre" prefWidth="75.0" text="Nombre" />
+            <TableColumn fx:id="colPeso" prefWidth="75.0" text="Peso" />
+            <TableColumn fx:id="colRuta" prefWidth="760.0" text="Ruta" />
+         </columns>
+      </TableView>
+      <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="352.0">
+         <children>
+            <ComboBox fx:id="cbFiltros" onAction="#ordenarTabla" prefWidth="150.0" />
+         </children>
+      </VBox>
+   </children>
+</HBox>
